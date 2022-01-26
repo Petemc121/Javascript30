@@ -91,22 +91,16 @@
         transform: translateY(200px);
       }
 
+      .panelAnimated-active > *:first-child {
+        transform: translateY(0px);
+      }
+
+      .panelAnimated-active > *:last-child {
+        transform: translateY(0px);
+      }
+
       .panelAnimated {
         flex-grow: 5;
-      }
-
-      .panelChildrenAnimated {
-        animation: textAnimation 1s forwards;
-      }
-
-      @keyframes textAnimation {
-        from {
-          flex: 1 0 auto;
-        }
-
-        to {
-          flex: initial;
-        }
       }
 
       .panel p {
@@ -156,11 +150,12 @@
     <script>
       const panels = document.querySelectorAll(".panel");
 
-      function handleClick(evt) {
+      function handleClick() {
         this.classList.add("panelAnimated");
-        this.querySelectorAll("*").forEach((p) =>
-          p.classList.add("panelChildrenAnimated")
-        );
+      }
+
+      function handleTransition() {
+        this.classList.toggle("panelAnimated-active");
       }
 
       panels.forEach((panel) => {
@@ -169,11 +164,9 @@
           const isClickInside = panel.contains(event.target);
           if (!isClickInside) {
             panel.classList.remove("panelAnimated");
-            panel
-              .querySelectorAll("*")
-              .forEach((p) => p.classList.remove("panelChildrenAnimated"));
           }
         });
+        panel.addEventListener("transitionend", handleTransition);
       });
     </script>
   </body>
