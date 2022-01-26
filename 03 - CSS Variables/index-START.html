@@ -43,6 +43,10 @@
         --blur: 10px;
       }
 
+      .hl {
+        color: var(--base);
+      }
+
       img {
         padding: var(--spacing);
         background-color: var(--base);
@@ -75,12 +79,17 @@
       const inputs = document.querySelectorAll(`.controls input`);
       const img = document.querySelector(`img`);
 
-      function handleUpdate(e) {
-        console.log(this.value);
+      function handleUpdate() {
+        const suffix = this.dataset.sizing || "";
+        document.documentElement.style.setProperty(
+          `--${this.name}`,
+          this.value + suffix
+        );
       }
 
       inputs.forEach((input) => {
         input.addEventListener("change", handleUpdate);
+        input.addEventListener("mouseover", handleUpdate);
       });
     </script>
   </body>
