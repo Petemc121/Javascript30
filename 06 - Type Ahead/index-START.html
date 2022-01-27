@@ -37,26 +37,9 @@
         return initCities.filter((element) => element.city.match(regex));
       }
 
-      function highlightText(searchValue, area) {
-        const regex = new RegExp(searchValue, "gi");
-        if (area.match(regex)) {
-          return searchValue;
-        } else {
-          return "";
-        }
-      }
-
-      function cutText(searchValue, area) {
-        const regex = new RegExp(searchValue, "gi");
-        if (area.match(regex)) {
-          return area.replace(searchValue, "");
-        } else {
-          return area;
-        }
-      }
-
       function displayCityArray(e) {
         const searchValue = e.target.value;
+        const regex = new RegExp(searchValue, "gi");
         const filteredArray = filterCityArray(cityArray, searchValue);
         if (filteredArray.length < 1000) {
           suggestions.textContent = "";
@@ -65,15 +48,15 @@
             const formatedPopulation = parseInt(
               place.population
             ).toLocaleString();
-            const unHighlightedCityText = cutText(searchValue, place.city);
-            console.log(unHighlightedCityText);
-            const unHighlightedStateText = cutText(searchValue, place.state);
-            const highlightedCityText = highlightText(searchValue, place.city);
-            const highlightedStateText = highlightText(
-              searchValue,
-              place.state
+            const cityOutput = place.city.replace(
+              regex,
+              `<span class="hl">${e.target.value}</span>`
             );
-            const html = `<span class="name"><span class="hl">${highlightedCityText}</span>${unHighlightedCityText},<span class="hl">${highlightedStateText}</span>${unHighlightedStateText}</span>
+            const stateOutput = place.state.replace(
+              regex,
+              `<span class="hl">${e.target.value}</span>`
+            );
+            const html = `<span class="name">${cityOutput}, ${stateOutput}</span>
                           <span class="population"> ${formatedPopulation}</span>`;
             newList.innerHTML = html;
             suggestions.appendChild(newList);
@@ -86,16 +69,6 @@
 
       search.addEventListener("change", displayCityArray);
       search.addEventListener("keyup", displayCityArray);
-
-      // cityArray.forEach((city) => {
-      //   const newList = document.createElement("li");
-      //   newList.textContent = city.city;
-      //   suggestions.appendChild(newList);
-      // });
-
-      // response.forEach((element) => console.log(element));
-
-      // suggestions.textContent  =
     </script>
   </body>
 </html>
