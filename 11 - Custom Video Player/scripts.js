@@ -8,14 +8,18 @@ const volumeSlider = document.querySelector(".player__slider[name=volume]");
 const speedSlider = document.querySelector(
   ".player__slider[name=playbackRate]"
 );
+const skipButtons = document.querySelectorAll(".player__button[data-skip]");
 
-//functions
+//event listeners
 
 playToggle.addEventListener("click", playPause);
 video.addEventListener("click", playPause);
 video.addEventListener("timeupdate", handleProgress);
 volumeSlider.addEventListener("change", handleVolumeChange);
 speedSlider.addEventListener("change", handleSpeedChange);
+skipButtons.forEach((skipButton) => {
+  skipButton.addEventListener("click", handleSkip);
+});
 
 function playPause() {
   if (video.paused) {
@@ -38,5 +42,9 @@ function handleVolumeChange(e) {
 
 function handleSpeedChange(e) {
   video.playbackRate = e.target.value;
-  console.log(video.playbackRate);
+}
+
+function handleSkip(e) {
+  console.log(e.target.dataset.skip);
+  video.currentTime += parseFloat(e.target.dataset.skip);
 }
