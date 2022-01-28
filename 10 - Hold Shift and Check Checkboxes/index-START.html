@@ -141,9 +141,7 @@
           if (checkbox.checked) {
             const checked = checkBoxesChecked();
             const low = Math.min(...checked);
-            const high = index;
-
-            console.dir(checkbox);
+            let high = Math.max(...checked);
 
             for (let i = low; i <= high; i++) {
               checkboxes[i].checked = true;
