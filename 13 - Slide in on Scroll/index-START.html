@@ -242,12 +242,42 @@
         };
       }
 
-      window.addEventListener("scroll", debounce(checkSlide));
+      const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.5,
+      };
 
-      function checkSlide(e) {
-        console.log(window.scrollY);
-        images.forEach((image) => {});
+      const observer = new IntersectionObserver(observerCallback, options);
+
+      images.forEach((image) => {
+        observer.observe(image);
+      });
+
+      function observerCallback(e) {
+        e[0].target.classList.add("active");
       }
+
+      // window.addEventListener("scroll", debounce(checkSlide));
+
+      // function checkSlide(e) {
+      //   images.forEach((image, index) => {
+      //     let position = image.getBoundingClientRect();
+      //     let midpoint = (position.top + position.bottom) / 2;
+
+      //     if (window.scrollY > midpoint) {
+      //       image.classList.add("active");
+      //     } else {
+      //       image.classList.remove("active");
+      //     }
+
+      //     if (index === 4) {
+      //       console.log(window.scrollY);
+      //       console.log("midpoint: " + midpoint);
+      //       console.log(position);
+      //     }
+      //   });
+      // }
     </script>
 
     <style>
@@ -293,7 +323,9 @@
 
       .slide-in {
         opacity: 0;
-        transition: all 0.5s;
+        transition: all 1s;
+        height: 400px;
+        width: auto;
       }
 
       .align-left.slide-in {
