@@ -242,42 +242,46 @@
         };
       }
 
-      const options = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.5,
-      };
+      // const options = {
+      //   root: null,
+      //   rootMargin: "0px",
+      //   threshold: [0, 0.25, 0.5],
+      // };
 
-      const observer = new IntersectionObserver(observerCallback, options);
+      // const observer = new IntersectionObserver(observerCallback, options);
 
-      images.forEach((image) => {
-        observer.observe(image);
-      });
+      // images.forEach((image) => {
+      //   observer.observe(image);
+      // });
 
-      function observerCallback(e) {
-        e[0].target.classList.add("active");
-      }
-
-      // window.addEventListener("scroll", debounce(checkSlide));
-
-      // function checkSlide(e) {
-      //   images.forEach((image, index) => {
-      //     let position = image.getBoundingClientRect();
-      //     let midpoint = (position.top + position.bottom) / 2;
-
-      //     if (window.scrollY > midpoint) {
-      //       image.classList.add("active");
-      //     } else {
-      //       image.classList.remove("active");
-      //     }
-
-      //     if (index === 4) {
-      //       console.log(window.scrollY);
-      //       console.log("midpoint: " + midpoint);
-      //       console.log(position);
-      //     }
-      //   });
+      // function observerCallback(e) {
+      //   if (e[0].intersectionRatio < 0.25) {
+      //     e[0].target.classList.remove("active");
+      //   } else {
+      //     e[0].target.classList.add("active");
+      //   }
+      //   console.log(e);
       // }
+
+      window.addEventListener("scroll", debounce(checkSlide));
+
+      function checkSlide(e) {
+        images.forEach((image, index) => {
+          // console.dir(image);
+          // console.log(window.scrollY);
+          // console.log(image.offsetTop);
+          const slideInAt = window.scrollY + window.innerHeight;
+          const isHalfway = slideInAt > (image.offsetTop + image.height) / 2;
+          const isInView =
+            slideInAt > image.offsetTop && window.scrollY < image.offsetTop;
+
+          if (isHalfway && isInView) {
+            image.classList.add("active");
+          } else {
+            image.classList.remove("active");
+          }
+        });
+      }
     </script>
 
     <style>
