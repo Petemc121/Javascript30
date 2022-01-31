@@ -58,7 +58,8 @@
       const itemsList = document.querySelector(".plates");
       const localStorage = window.localStorage;
       const items = JSON.parse(localStorage.getItem("items").split(",")) || [];
-      console.log(items);
+
+      document.addEventListener("submit", addItem);
 
       function addItem(e) {
         e.preventDefault();
@@ -66,8 +67,6 @@
         localStorage.setItem("items", JSON.stringify(items));
         displayItems();
       }
-
-      console.log(localStorage);
 
       function displayItems() {
         itemsList.innerHTML = "";
@@ -87,8 +86,6 @@
       }
 
       displayItems();
-
-      document.addEventListener("submit", addItem);
     </script>
   </body>
 </html>
