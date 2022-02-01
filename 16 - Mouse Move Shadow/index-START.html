@@ -36,23 +36,32 @@
 
     <script>
       const woah = document.querySelector("h1");
+      const hero = document.querySelector(".hero");
+      const walk = 100;
 
-      window.addEventListener("mouseover", (e) => {
-        console.clear();
-        console.log(e);
-        const shadowX = scaleDown(e.clientX);
-        const shadowY = scaleDown(e.clientY);
+      hero.addEventListener("mousemove", shadow);
 
-        console.log(`x: ${shadowX}, y:${shadowY}`);
+      function shadow(e) {
+        let { offsetX: x, offsetY: y } = e;
+        const { offsetWidth: width, offsetHeight: height } = hero;
 
-        woah.style.textShadow = `${shadowX}px ${shadowY}px 0 rgba(0, 0, 0, 1)`;
-      });
-
-      function scaleDown(number) {
-        if (number > 500) {
-          return Math.floor(number * 0.02);
+        if (this !== e.target) {
+          //this (e.currentTarget) refers to element to which the event listener is attached. e.target refers to the element the event listener triggered on.
+          x = x + e.target.offsetLeft;
+          y = y + e.target.offsetTop;
         }
-        return -Math.floor(number * 0.02);
+
+        const shadowX = Math.round((x / width) * walk - walk / 2);
+        const shadowY = Math.round((y / height) * walk - walk / 2);
+        console.clear();
+        // console.dir(woah);
+        console.log(`y ${y} yheight ${height}`);
+        console.log(`x ${x} xwidth ${width}`);
+        console.log(e);
+
+        console.log(shadowX + " " + shadowY);
+
+        woah.style.textShadow = `${shadowX}px ${shadowY}px 0 purple,${-shadowX}px ${shadowY}px 0 pink,${shadowX}px ${-shadowY}px 0 blue, ${-shadowX}px ${-shadowY}px 0 green`;
       }
     </script>
   </body>
