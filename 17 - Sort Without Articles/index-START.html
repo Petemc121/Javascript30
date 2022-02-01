@@ -60,33 +60,50 @@
         "An Old Dog",
       ];
 
+      const articlesAndBands = [];
+
       const bandsList = document.querySelector("#bands");
 
       function sortWithoutArticles() {
-        const removedArticles = removeArticles(bands);
-        const sortedBands = removedArticles.sort();
-        console.log(removedArticles);
-        console.log(sortedBands);
-        displayBands(removedArticles);
+        const splitArticlesandBands = bands.map((band) => {
+          return splitArticles(band);
+        });
+        function sortFunction(a, b) {
+          if (a.band < b.band) {
+            return -1;
+          }
+          if (a.band > b.band) {
+            return 1;
+          }
+          return 0;
+        }
+        const sortedBands = splitArticlesandBands.sort(sortFunction);
+        const sortedBandsWithArticles = addArticles(sortedBands);
+        displayBands(sortedBandsWithArticles);
       }
       sortWithoutArticles();
 
-      function removeArticles(bands) {
-        const removedArticles = bands.map((band) => {
-          if (band.includes("The ")) {
-            return band.replace("The ", "");
-          }
-          if (band.includes("An ")) {
-            return band.replace("An ", "");
-          }
-          if (band.includes("A ")) {
-            return band.replace("A ", "");
-          }
+      function splitArticles(band) {
+        if (band.includes("The ")) {
+          const minusArticle = band.replace("The ", "");
+          return { article: "The ", band: minusArticle };
+        }
+        if (band.includes("An ")) {
+          const minusArticle = band.replace("An ", "");
+          return { article: "A ", band: minusArticle };
+        }
+        if (band.includes("A ")) {
+          const minusArticle = band.replace("A ", "");
+          return { article: "A ", band: minusArticle };
+        }
 
-          return band;
+        return { article: "", band: band };
+      }
+
+      function addArticles(bands) {
+        return bands.map((band) => {
+          return band.article.concat("", band.band);
         });
-
-        return removedArticles;
       }
 
       function displayBands(bands) {
