@@ -79,13 +79,8 @@
         const totalSeconds = videoDurationsInSeconds.reduce((value, acc) => {
           return acc + value;
         });
-        const hours = (totalSeconds - (totalSeconds % 3600)) / 3600;
-        const remainingSeconds = totalSeconds % 3600;
-        const minutes = (remainingSeconds - (remainingSeconds % 60)) / 60;
-        const seconds = remainingSeconds % 60;
-        const totalDuration = `Total duration: ${hours}:${minutes}:${seconds}`;
-        console.log(hours);
-        console.log(totalDuration);
+        const { hours, minutes, seconds } = hourFormat(totalSeconds);
+        console.log(`Total duration: ${hours}:${minutes}:${seconds}`);
       }
 
       addVideoDurations();
@@ -101,6 +96,14 @@
           const minutesSeconds = duration.split(":");
           return parseInt(minutesSeconds[0]) * 60 + parseInt(minutesSeconds[1]);
         });
+      }
+
+      function hourFormat(totalSeconds) {
+        const hours = (totalSeconds - (totalSeconds % 3600)) / 3600;
+        const remainingSeconds = totalSeconds % 3600;
+        const minutes = (remainingSeconds - (remainingSeconds % 60)) / 60;
+        const seconds = remainingSeconds % 60;
+        return { hours: hours, minutes: minutes, seconds: seconds };
       }
     </script>
   </body>
