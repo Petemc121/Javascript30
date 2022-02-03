@@ -99,7 +99,7 @@
       }
 
       function hourFormat(totalSeconds) {
-        const hours = (totalSeconds - (totalSeconds % 3600)) / 3600;
+        const hours = (totalSeconds - (totalSeconds % 3600)) / 3600; // equivalent to Math.floor(totalSeconds/3600)
         const remainingSeconds = totalSeconds % 3600;
         const minutes = (remainingSeconds - (remainingSeconds % 60)) / 60;
         const seconds = remainingSeconds % 60;
