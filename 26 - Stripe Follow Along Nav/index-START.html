@@ -193,6 +193,7 @@
           0 15px 35px rgba(50, 50, 93, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);
         transition: all 0.3s, opacity 0.1s, transform 0.2s;
         transform-origin: 50% 0;
+        transform: translateY(100px);
         display: flex;
         justify-content: center;
         opacity: 0;
@@ -262,9 +263,7 @@
     <script>
       const dropdowns = document.querySelectorAll(".dropdown");
       const menuItems = [...document.querySelectorAll(".cool > li > a")];
-
-      console.dir(menuItems);
-      console.dir(dropdowns[1]);
+      const dropdownBackground = document.querySelector(".dropdownBackground");
 
       menuItems.forEach((menuItem, index) => {
         console.log(index);
@@ -272,22 +271,24 @@
           handleMenuItemHover(index);
         });
 
-        menuItem.addEventListener("mouseout", () => {
+        menuItem.addEventListener("click", () => {
           handleMenuItemHoverOut(index);
         });
       });
 
       function handleMenuItemHover(index) {
-        dropdowns[index].classList.remove("dropdown");
-        dropdowns[index].classList.remove("dropdown1");
-        dropdowns[index].classList.add("trigger-enter");
-        dropdowns[index].classList.add("dropdown");
+        dropdowns[index].className = "";
+        dropdownBackground.classList.add("open");
+        dropdowns[index].classList.add("trigger-enter", "dropdown");
+        dropdownBackground.appendChild(dropdowns[index]);
+        dropdownBackground.width = "auto";
+        dropdownBackground.height = "auto";
       }
       function handleMenuItemHoverOut(index) {
-        dropdowns[index].classList.remove("trigger-enter");
-        dropdowns[index].classList.remove("dropdown");
-        dropdowns[index].classList.add("dropdown");
-        dropdowns[index].classList.add("dropdown1");
+        dropdowns[index].className = "";
+        dropdownBackground.classList.remove("open");
+        dropdowns[index].classList.add("dropdown", "dropdown1");
+        dropdownBackground.removeChild(dropdownBackground.firstChild);
       }
     </script>
   </body>
