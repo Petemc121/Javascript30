@@ -281,8 +281,8 @@
         dropdownBackground.classList.add("open");
         dropdowns[index].classList.add("trigger-enter", "dropdown");
         dropdownBackground.appendChild(dropdowns[index]);
-        dropdownBackground.width = "auto";
-        dropdownBackground.height = "auto";
+
+        dropdownBackground.style.transform = "translateX(500px)";
       }
       function handleMenuItemHoverOut(index) {
         dropdowns[index].className = "";
